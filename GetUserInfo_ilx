@@ -6,7 +6,7 @@ if { [ACCESS::policy agent_id] eq "GETUSERINFO" } {
     set username [ACCESS::session data get session.logon.last.username]
     log local0.debug "Username: $username"
    
-    set userInfo [ILX::call $RPC_HANDLE -timeout 30000 f5GetEmailFromXML $username]
+    set userInfo [ILX::call $RPC_HANDLE -timeout 30000 f5UserInfo $username]
     log local0.debug "User Info String: $userInfo"
     
     ACCESS::session data set session.custom.emailAddress [lindex [split $userInfo ","] 0]
