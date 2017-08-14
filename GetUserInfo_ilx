@@ -1,7 +1,7 @@
 when ACCESS_POLICY_AGENT_EVENT {
 if { [ACCESS::policy agent_id] eq "GETUSERINFO" } {
 
-    set RPC_HANDLE [ILX::init GetAddress_plugin GetAddress_ext]
+    set RPC_HANDLE [ILX::init GetInfo_plugin GetInfo_ext]
    
     set username [ACCESS::session data get session.logon.last.username]
     log local0.debug "Username: $username"
