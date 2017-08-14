@@ -1,0 +1,19 @@
+when ACCESS_POLICY_AGENT_EVENT {
+if { [ACCESS::policy agent_id] eq "GETUSERINFO" } {
+
+    set RPC_HANDLE [ILX::init GetAddress_plugin GetAddress_ext]
+   
+    set username [ACCESS::session data get session.logon.last.username]
+    log local0.debug "Username: $username"
+   
+    set userInfo [ILX::call $RPC_HANDLE -timeout 30000 f5GetEmailFromXML $username]
+    log local0.debug "User Info String: $userInfo"
+    
+    ACCESS::session data set session.custom.emailAddress [lindex [split $userInfo ","] 0]
+    
+    ACCESS::session data set session.custom.userAuth [lindex [split $userInfo ","] 1]
+    
+    ACCESS::session data set session.custom.isOTPLocked [lindex [split $userInfo ","] 2]
+    
+    }
+}
